@@ -14,7 +14,9 @@ class VipPublic {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/vip.public.css', array(), $this->version, 'all' );
 	}
 	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vip.public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( "localstorage", plugin_dir_url( __FILE__ ) . 'js/utils/localstorage.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( "vip", plugin_dir_url( __FILE__ ) . 'js/vip.public.js', array( 'jquery' , 'localstorage'), $this->version, false );
+		// wp_enqueue_script( $handle:string, $src:string, $deps:array, $ver:string|boolean|null, $in_footer:boolean )
 	}
 
 	public function suggest_vip_modal() {
