@@ -17,4 +17,9 @@ class VipPublic {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vip.public.js', array( 'jquery' ), $this->version, false );
 	}
 
+	public function suggest_vip_modal() {
+		if(is_user_logged_in()) {
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/vip__suggest.modal.php';
+		}
+	}
 }
