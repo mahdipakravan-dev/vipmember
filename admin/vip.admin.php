@@ -17,4 +17,25 @@ class VipAdmin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vip.admin.js', array( 'jquery' ), $this->version, false );
 	}
 
+	public function register_menu() {
+		add_menu_page(
+			'VIP Settings',
+			'VIP Settings',
+			'manage_options',
+			'vipmember-settings',
+			fn() => require_once VIP_DIR . 'admin/partials/vip__display.php',
+			'dashicons-superhero-alt'
+		);
+	
+		// Add the first submenu item
+		add_submenu_page(
+			'vipmember-settings',
+			'Users',
+			'Users',
+			'manage_options',
+			'manage-users',
+			fn() => require_once VIP_DIR . 'admin/partials/vip__users.php',
+		);
+	}
+
 }
