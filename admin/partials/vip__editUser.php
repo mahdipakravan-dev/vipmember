@@ -1,35 +1,11 @@
 <?php 
+    $user = get_user_by("id", $_GET["id"]);
+
     $result = null;
-	if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
-		$username = sanitize_text_field($_POST['user_login']);
-		$email = sanitize_text_field($_POST['email']);
-		$pass1 = sanitize_text_field($_POST['pass1']);
-		$pass2 = sanitize_text_field($_POST['pass2']);
-
-		if($pass1 != $pass2) return "Password is Wrong";
-
-		$user_data = array(
-			"user_login" => apply_filters( "pre_user_login" , $username),
-			"user_pass" => apply_filters( "pre_user_pass" , $pass1),
-			"email" => apply_filters( "pre_user_email" , $email),
-		);
-
-	    $user_id = wp_insert_user($user_data);
-		if(is_wp_error($user_id)) {
-			$result = array(
-                "type" => "error",
-                "message" => $user_id
-            );
-		} else {
-			$result = array(
-                "type" => "success",
-                "message" => "user created successfully!"
-            );
-		}
-	}
+	
 ?>
 <div class="wrap">
-<h1 id="add-new-user">Add VIP User</h1>
+<h1 id="add-new-user">Edit VIP User</h1>
 
 <?php if(!$result) { ?>
     <div class="message notice inline notice-warning notice-alt">
@@ -46,16 +22,19 @@
     </div>
 <?php } ?>
 
-<form action="<?php echo($_SERVER["PHP_SELF"]) . "?page=add-user"; ?>" method="POST">
+<form action="<?php echo($_SERVER["PHP_SELF"]) . "?page=manage-users&action=update&id=" . $user->ID ?>" method="POST">
+    <input name="ID" type="hidden" value="<?php echo $user->ID; ?>">
     <table class="form-table" role="presentation">
         <tbody>
             <tr class="form-field form-required">
                 <th scope="row"><label for="user_login">Username <span class="description">(required)</span></label></th>
-                <td><input name="user_login" type="text" id="user_login" value="" aria-required="true" autocapitalize="none" autocorrect="off" autocomplete="off" maxlength="60"></td>
+                <td>
+                    <input name="user_login" type="text" disabled id="user_login" value="<?php echo $user->user_login; ?>" aria-required="true" autocapitalize="none" autocorrect="off" autocomplete="off" maxlength="60">
+                </td>
             </tr>
             <tr class="form-field form-required">
                 <th scope="row"><label for="email">Email <span class="description">(required)</span></label></th>
-                <td><input name="email" type="email" id="email" value=""></td>
+                <td><input name="email" type="email" id="email" value="<?php echo $user->user_email;?>"></td>
             </tr>
             <tr class="form-field form-required user-pass1-wrap">
                 <th scope="row">
@@ -95,7 +74,7 @@
 
 	
 	<p class="submit">
-        <input type="submit" name="submit" id="createusersub" class="button button-primary" value="Add VIP User">
+        <input type="submit" name="submit" id="createusersub" class="button button-primary" value="Edit VIP User">
     </p>
 </form>
 </div>
