@@ -1,4 +1,5 @@
 <?php 
+    $result = null;
 	if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
 		$username = sanitize_text_field($_POST['user_login']);
 		$email = sanitize_text_field($_POST['email']);
@@ -19,22 +20,36 @@
 
 	    $user_id = wp_insert_user($user_data);
 		if(is_wp_error($user_id)) {
-			echo "ERRORED ";
-			var_dump($user_id);
+			$result = array(
+                "type" => "error",
+                "message" => $user_id
+            );
 		} else {
-			echo "ITS OK";
+			$result = array(
+                "type" => "success",
+                "message" => "user created successfully!"
+            );
 		}
 	}
 ?>
 <div class="wrap">
 <h1 id="add-new-user">Add VIP User</h1>
 
-<div class="message notice inline notice-warning notice-alt">
-    <p>if a user currently available in users list , never create it again . 
-    <a href="http://localhost/refactorist" class="update-link" >update that user VIP package</a>.</p>
-</div>
+<?php if(!$result) { ?>
+    <div class="message notice inline notice-warning notice-alt">
+        <p>if a user currently available in users list , never create it again . 
+        <a href="http://localhost/refactorist" class="update-link" >update that user VIP package</a>.</p>
+    </div>
+<?php } elseif($result["type"] == "success") { ?>
+    <div class="message-success notice inline notice-success notice-alt">
+        <p><?php echo $result["message"] ?></p> 
+    </div>
+<?php } elseif($result["type"] == "error") { ?>
+    <div class="message notice inline notice-error notice-alt">
+        <p><?php echo $result["message"] ?></p> 
+    </div>
+<?php } ?>
 
-<?php  ?>
 <form action="<?php echo($_SERVER["PHP_SELF"]) . "?page=add-user"; ?>" method="POST">
     <table class="form-table" role="presentation">
         <tbody>
