@@ -1,5 +1,6 @@
 <?php 
     $user = get_user_by("id", $_GET["id"]);
+    $phoneNumber = get_user_meta( $_GET["id"], "vip__phoneNumber", true );
 
     $result = null;
 	
@@ -35,6 +36,10 @@
             <tr class="form-field form-required">
                 <th scope="row"><label for="email">Email <span class="description">(required)</span></label></th>
                 <td><input name="email" type="email" id="email" value="<?php echo $user->user_email;?>"></td>
+            </tr>
+            <tr class="form-field form-required">
+                <th scope="row"><label for="phoneNumber">PhoneNumber <span class="description"></span></label></th>
+                <td><input name="phoneNumber" value="<?php echo $phoneNumber; ?>" type="phone"></td>
             </tr>
             <tr class="form-field form-required user-pass1-wrap">
                 <th scope="row">

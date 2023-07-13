@@ -5,6 +5,7 @@
                 $delete_result = wp_delete_user($_GET["id"]);
 
                 if($delete_result) {
+                    delete_user_meta( $_GET["id"], "vip__phoneNumber");
                     $result = array(
                         "type" => "success",
                         "message" => "delete user successfully !"
@@ -41,6 +42,8 @@
                             "message" => $result
                         );
                     } else {
+                        if($_POST["phoneNumber"]) 
+                            update_user_meta($_POST["ID"], "vip__phoneNumber", $_POST["phoneNumber"]);
                         $result = array(
                             "type" => "success",
                             "message" => "user created successfully!"
@@ -110,9 +113,6 @@
                             </span>
                             <span class="trash">
                                 <a href="<?php echo $_SERVER["PHP_SELF"] . "?page=manage-users&action=delete" . "&id=" . $user->ID; ?>" class="submitdelete">Trash</a> | 
-                            </span>
-                            <span class="view">
-                                <a href="<?php echo $_SERVER["PHP_SELF"] . "?page=manage-users&action=view" . "&id=" . $user->ID; ?>" rel="bookmark" aria-label="View “Hello world!”">View</a>
                             </span>
                         </div>
                     </td>

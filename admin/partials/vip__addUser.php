@@ -3,6 +3,7 @@
 	if(isset($_POST["submit"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
 		$username = sanitize_text_field($_POST['user_login']);
 		$email = sanitize_text_field($_POST['email']);
+        $phoneNumber = sanitize_text_field($_POST['phoneNumber']);
 		$pass1 = sanitize_text_field($_POST['pass1']);
 		$pass2 = sanitize_text_field($_POST['pass2']);
 
@@ -21,6 +22,7 @@
                 "message" => $user_id
             );
 		} else {
+            add_user_meta( $user_id, "vip__phoneNumber", $phoneNumber);
 			$result = array(
                 "type" => "success",
                 "message" => "user created successfully!"
@@ -56,6 +58,10 @@
             <tr class="form-field form-required">
                 <th scope="row"><label for="email">Email <span class="description">(required)</span></label></th>
                 <td><input name="email" type="email" id="email" value=""></td>
+            </tr>
+            <tr class="form-field form-required">
+                <th scope="row"><label for="phoneNumber">PhoneNumber <span class="description"></span></label></th>
+                <td><input name="phoneNumber" type="phone"></td>
             </tr>
             <tr class="form-field form-required user-pass1-wrap">
                 <th scope="row">
