@@ -36,6 +36,15 @@ class VipAdmin {
 			'manage-users',
 			fn() => require_once VIP_DIR . 'admin/partials/vip__users.php',
 		);
-	}
 
+		add_submenu_page(
+			'vipmember-settings',
+			'Add user',
+			'Add user',
+			'manage_options',
+			'add-user',
+			fn() => require_once VIP_DIR . 'admin/partials/vip__addUser.php',
+		);
+	}
 }
+
