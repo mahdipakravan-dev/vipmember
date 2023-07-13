@@ -46,5 +46,19 @@ class VipAdmin {
 			fn() => require_once VIP_DIR . 'admin/partials/vip__addUser.php',
 		);
 	}
+
+	public function show_profile($user) {
+		// if($_POST["vip__phoneNumber"]) {
+		// 	update_user_meta( $user->ID, "vip__phoneNumber", $_POST["vip__phoneNumber"]);
+		// }
+
+		var_dump($_POST);
+
+		require_once VIP_DIR . 'admin/partials/fields/field_phoneNumber.create.php';
+	}
+
+	public function save_profile($userId) {
+		return update_user_meta( $userId, "vip__phoneNumber", $_REQUEST["vip__phoneNumber"]);
+	}
 }
 
