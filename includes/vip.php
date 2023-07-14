@@ -44,6 +44,7 @@ class Vip {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', $plugin_admin, 'vip_role' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_menu' );
 
 		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'show_profile' );
@@ -52,6 +53,7 @@ class Vip {
 		$this->loader->add_action('personal_options_update', $plugin_admin, 'save_profile');
 		$this->loader->add_action('edit_user_profile_update', $plugin_admin, 'save_profile');
 		$this->loader->add_action('user_register', $plugin_admin, 'save_profile');
+
 	}
 
 	private function define_public_hooks() {
@@ -61,6 +63,8 @@ class Vip {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'suggest_vip_modal' );
+
+		$this->loader->add_shortcode("vip-content", $plugin_public , "vip_content_shortcode");
 	}
 
 	public function run() {

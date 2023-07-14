@@ -17,6 +17,17 @@ class VipAdmin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vip.admin.js', array( 'jquery' ), $this->version, false );
 	}
 
+	public function vip_role() {
+		add_role(
+			'vip_member',
+			'Vip Member',
+		);
+		$vip_role = get_role( "vip_member" );
+		$vip_role->add_cap("vip_content");
+		get_role( "administrator" )
+			->add_cap("vip_content");
+	}
+
 	public function register_menu() {
 		add_menu_page(
 			'VIP Settings',
@@ -48,17 +59,15 @@ class VipAdmin {
 	}
 
 	public function show_profile($user) {
-		// if($_POST["vip__phoneNumber"]) {
-		// 	update_user_meta( $user->ID, "vip__phoneNumber", $_POST["vip__phoneNumber"]);
-		// }
-
-		var_dump($_POST);
-
 		require_once VIP_DIR . 'admin/partials/fields/field_phoneNumber.create.php';
 	}
 
 	public function save_profile($userId) {
 		return update_user_meta( $userId, "vip__phoneNumber", $_REQUEST["vip__phoneNumber"]);
+	}
+
+	public function vip_content_shortcode() {
+
 	}
 }
 

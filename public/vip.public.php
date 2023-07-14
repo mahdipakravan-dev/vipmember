@@ -19,6 +19,14 @@ class VipPublic {
 		// wp_enqueue_script( $handle:string, $src:string, $deps:array, $ver:string|boolean|null, $in_footer:boolean )
 	}
 
+	public function vip_content_shortcode($attr , $content) {
+		if(current_user_can( "vip_content")) {
+			return $content;
+		} else {
+			return "Access Denied You must buy vip account";
+		}
+	}
+
 	public function suggest_vip_modal() {
 		if(is_user_logged_in()) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/vip__suggest.modal.php';
