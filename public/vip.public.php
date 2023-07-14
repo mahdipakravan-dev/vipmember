@@ -29,6 +29,7 @@ class VipPublic {
 
 	public function suggest_vip_modal() {
 		if(is_user_logged_in()) {
+			$user = wp_get_current_user();
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/vip__suggest.modal.php';
 		}
 	}

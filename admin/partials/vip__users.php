@@ -95,8 +95,17 @@
 
         <tbody>
             <?php 
-                $users = get_users();
-                foreach ($users as $key => $user):
+                $args = [
+                    "role__in" => ["vip_member" , "administrator"],
+                    "orderBy" => "ID",
+                    "order" => "DESC",
+                    // "meta_key" => "age",
+                    // "meta_value" => "30",
+                    // "meta_compare" => "<"
+                ];
+                $users = new WP_User_Query($args);
+
+                foreach ($users->get_results() as $key => $user):
             ?>
                 <tr>
                     <th scope="row" class="check-column">	
