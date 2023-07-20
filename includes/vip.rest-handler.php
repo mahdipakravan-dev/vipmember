@@ -9,9 +9,9 @@ class VipRestHandler {
     public function register_routes() {
         register_rest_route(
             self::PREFIX,
-            '/vip-plans',
+            '/create-plan',
             array(
-                'methods'             => WP_REST_Server::READABLE,
+                'methods'             => WP_REST_Server::ALLMETHODS,
                 'callback'            => "api__plan__create",
                 'permission_callback' => array( $this, 'check_permissions' ),
             )
