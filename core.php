@@ -39,8 +39,8 @@ register_deactivation_hook( __FILE__, 'deactivate_vip' );
 
 
 require VIP_DIR . 'includes/vip.php';
-function run_vr() {
+function start() {
 	$plugin = new Vip();
 	$plugin->run();
 }
-run_vr();
+start();
