@@ -33,4 +33,9 @@ class VipPublic {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/vip__suggest.modal.php';
 		}
 	}
+
+    public function register_public_rest_api() {
+        require plugin_dir_path( dirname( __FILE__ ) ) . 'public/rest.public.php';
+        new VipRestClass();
+    }
 }
