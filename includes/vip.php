@@ -17,6 +17,7 @@ class Vip {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->handle_rest_apis();
 
 	}
 
@@ -38,7 +39,15 @@ class Vip {
 
 	}
 
-	private function define_admin_hooks() {
+
+    public function handle_rest_apis()
+    {
+        require_once VIP_DIR . "includes/vip.rest-handler.php";
+        $restHandler = new VipRestHandler();
+    }
+
+
+    private function define_admin_hooks() {
 
 		$plugin_admin = new VipAdmin( $this->get_plugin_name(), $this->get_version() );
 
