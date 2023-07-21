@@ -18,7 +18,7 @@ class Vip {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->handle_rest_apis();
-
+        $this->handle_ajax_apis();
 	}
 
 	private function load_dependencies() {
@@ -44,6 +44,12 @@ class Vip {
     {
         require_once VIP_DIR . "includes/vip.rest-handler.php";
         $restHandler = new VipRestHandler();
+    }
+
+    public function handle_ajax_apis()
+    {
+        require_once VIP_DIR . "includes/vip.ajax-handler.php";
+        $restHandler = new VipAjaxHandler();
     }
 
 
