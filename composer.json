@@ -1,0 +1,19 @@
+{
+    "name": "mahdi/vipmember",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mahdi",
+            "email": "mahdipakravan79@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4" : {
+            "VipPublic\\" : "public",
+            "VipAdmin\\" : "admin",
+            "VipIncludes\\" : "includes",
+            "VipApi\\" : "api"
+        }
+    }
+}

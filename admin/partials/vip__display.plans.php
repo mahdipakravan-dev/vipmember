@@ -14,6 +14,7 @@
             <th>Title</th>
             <th>Description</th>
             <th>Expiration (day)</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -53,6 +54,10 @@
                             $row.append($('<td>').text(plan.title));
                             $row.append($('<td>').text(plan.description));
                             $row.append($('<td>').text(plan.day));
+                            $row.append($('<td class="d-flex justify-content-center">').html(`
+                                <div class="dashicons-before dashicons-edit-large mx-2"></div>
+                                <div class="dashicons-before dashicons-no"></div>
+`                           ));
                             $tableBody.append($row);
                         });                    } else {
                         console.error('Error:', response.data.message);

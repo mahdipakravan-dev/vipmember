@@ -1,5 +1,5 @@
 <?php
-require_once VIP_DIR . "includes/vip.db-helper.php";
+
 function api__plan__create() {
     $params = $_POST;
 
