@@ -30,6 +30,7 @@ function api__plan__create() {
         wp_send_json_success(array(
             'message' => 'VIP plan created successfully!',
             'data'    => $data,
+            'redirect_url' => admin_url("admin.php?page=vipmember-setting&tab=plans")
         ));
     } else {
         wp_send_json_error(new WP_Error( 'insert_failed', 'Failed to create VIP plan.', array( 'status' => 500)));

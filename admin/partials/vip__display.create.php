@@ -1,5 +1,10 @@
 <div class="wrap">
+
+    <div class="message notice inline notice-error notice-alt" id="error-section">
+    </div>
+
     <h1 class="wp-heading-inline">Add VIP Plan</h1>
+
     <form id="vip-plan-form">
         <?php wp_nonce_field( 'add_vip_plan_action', 'add_vip_plan_nonce' ); ?>
         <input type="hidden" name="action" value="add_vip_plan_submit">
@@ -11,7 +16,7 @@
 
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="4"></textarea>
         </div>
 
         <div class="form-group">
@@ -19,13 +24,14 @@
             <input class="form-control" type="number" id="day" name="day" required>
         </div>
 
-        <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
+        <button type="submit" class="btn btn-primary mt-2" id="submit-btn">Submit</button>
     </form>
 </div>
 
 <script>
     // my-ajax-script.js
     (function ($) {
+
         // Function to handle the form submission and make the AJAX call
         function handleFormSubmit() {
             const formData = {
@@ -37,29 +43,38 @@
 
 
             $("#submit-btn").text("Please Wait...")
-            // $("#submit-btn").prop("disabled" , true)
+            $("#submit-btn").prop("disabled" , true)
 
             $.ajax({
                 url: ajaxurl,
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    // Handle the AJAX response here (e.g., show a success message, reload the page, etc.)
-                    console.log('AJAX response:', response);
+                    if(!response?.success) {
+                        const errors = response.data.map(error => `${error.message}`).toString()
+                        console.log(errors)
+                        $("#error-section").show()
+                        $("#error-section").text(errors)
+                        $("#submit-btn").text("Submit")
+                        $("#submit-btn").prop("disabled" , false)
+                    }
+                    if(response?.data?.url) {
+                        window.location.href = response.data?.url
+                    }
                 },
                 error: function (error) {
-                    // Handle AJAX error (if any)
-                    console.error('AJAX error:', error);
+                    $("#submit-btn").text("Submit")
+                    $("#submit-btn").prop("disabled" , false)
                 },
             });
         }
 
-        // Wait for the document to be ready
         $(document).ready(function () {
-            // Add event listener to the form submission
+            $("#error-section").hide()
+
             $('#vip-plan-form').on('submit', function (event) {
-                event.preventDefault(); // Prevent the default form submission behavior
-                handleFormSubmit(); // Call the function to handle the AJAX request
+                event.preventDefault();
+                handleFormSubmit();
             });
         });
     })(jQuery);
