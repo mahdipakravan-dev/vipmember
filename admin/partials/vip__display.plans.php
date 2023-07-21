@@ -1,7 +1,13 @@
 <div class="wrap">
+
     <h1 class="wp-heading-inline">Plans of VipMember</h1>
     <a href="#" class="page-title-action">Create Plan</a>
-    <table class="table table-bordered mt-2">
+    <br>
+    <div class="d-flex justify-content-center" id="loading">
+        <div class="spinner-border" role="status">
+        </div>
+    </div>
+    <table class="table table-bordered mt-2" id="plans-table">
         <thead>
         <tr>
             <th>Id</th>
@@ -12,17 +18,51 @@
         </thead>
         <tbody>
         <tr>
-            <td>1</td>
-            <td>Monthly</td>
-            <td>a plans for a month</td>
-            <td>30Day</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>3 + 1 Month</td>
-            <td>buy 3 month and get 1 month as gift!</td>
-            <td>120Day</td>
+
         </tr>
         </tbody>
     </table>
 </div>
+
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            const data = {
+                action: 'vip_plan_getMany',
+            };
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: data,
+                beforeSend: function () {
+                    $("#loading").removeClass('d-none');
+                },
+                success: function (response) {
+                    $("#loading").addClass('d-none');
+                    if (response.success) {
+                        const $tableBody = $('#plans-table tbody');
+
+                        // Clear any existing rows in the table body
+                        $tableBody.empty();
+
+                        // Create and append table rows and cells based on the response data
+                        response.data.data.forEach(plan => {
+                            const $row = $('<tr>');
+                            $row.append($('<td>').text(plan.id));
+                            $row.append($('<td>').text(plan.title));
+                            $row.append($('<td>').text(plan.description));
+                            $row.append($('<td>').text(plan.day));
+                            $tableBody.append($row);
+                        });                    } else {
+                        console.error('Error:', response.data.message);
+                    }
+                },
+                error: function (error) {
+                    console.error('AJAX error:', error);
+                },
+            });
+        });
+    })(jQuery);
+
+</script>

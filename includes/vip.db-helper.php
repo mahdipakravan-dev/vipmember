@@ -38,6 +38,40 @@ class VipDBHelper
         return $result;
     }
 
+    public static function find($table_name, $args , $row = false)
+    {
+        global $wpdb;
+
+        $table_name = self::get_table_name($table_name);
+
+        $defaults = array(
+            'select' => '*',
+            'where' => array(),
+            'orderby' => '',
+            'order' => 'DESC',
+            'limit' => -1,
+            'offset' => 0,
+        );
+
+        $args = wp_parse_args($args, $defaults);
+
+        $query = "SELECT {$args['select']} FROM {$table_name}";
+
+        if (!empty($args['where'])) {
+            $where = implode(' AND ', $args['where']);
+            $query .= " WHERE {$where}";
+        }
+
+        if (!empty($args['orderby'])) {
+            $query .= " ORDER BY {$args['orderby']} {$args['order']}";
+        }
+
+        if ($args['limit'] > 0) {
+            $query .= " LIMIT {$args['limit']} OFFSET {$args['offset']}";
+        }
+
+        return $row ? $wpdb->get_row($query) : $wpdb->get_results($query);
+    }
     public static function create_table($query)
     {
         global $wpdb;
