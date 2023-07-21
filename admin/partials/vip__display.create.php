@@ -1,3 +1,4 @@
+<?php $ajax_nonce = wp_create_nonce( "create-plan" ); ?>
 <div class="wrap">
 
     <div class="message notice inline notice-error notice-alt" id="error-section">
@@ -6,7 +7,6 @@
     <h1 class="wp-heading-inline">Add VIP Plan</h1>
 
     <form id="vip-plan-form">
-        <?php wp_nonce_field( 'add_vip_plan_action', 'add_vip_plan_nonce' ); ?>
         <input type="hidden" name="action" value="add_vip_plan_submit">
 
         <div class="form-group">
@@ -29,16 +29,14 @@
 </div>
 
 <script>
-    // my-ajax-script.js
     (function ($) {
-
-        // Function to handle the form submission and make the AJAX call
         function handleFormSubmit() {
             const formData = {
-                action: 'vip_plan_create', // The AJAX action name defined in Step 3
-                title: $('#title').val(), // Replace 'title' with the actual input field ID
-                description: $('#description').val(), // Replace 'description' with the actual input field ID
-                day: $('#day').val(), // Replace 'day' with the actual input field ID
+                action: 'vip_plan_create',
+                title: $('#title').val(),
+                description: $('#description').val(),
+                day: $('#day').val(),
+                security: '<?php echo $ajax_nonce; ?>',
             };
 
 
@@ -50,19 +48,20 @@
                 type: 'POST',
                 data: formData,
                 success: function (response) {
+                    console.log(response)
                     if(!response?.success) {
-                        const errors = response.data.map(error => `${error.message}`).toString()
-                        console.log(errors)
                         $("#error-section").show()
-                        $("#error-section").text(errors)
+                        $("#error-section").text(response.data.map(error => `${error.message}`).toString())
                         $("#submit-btn").text("Submit")
                         $("#submit-btn").prop("disabled" , false)
                     }
-                    if(response?.data?.url) {
-                        window.location.href = response.data?.url
+                    if(response?.data?.redirect_url) {
+                        window.location.href = response.data?.redirect_url
                     }
                 },
                 error: function (error) {
+                    $("#error-section").show()
+                    $("#error-section").text(error.responseText)
                     $("#submit-btn").text("Submit")
                     $("#submit-btn").prop("disabled" , false)
                 },
