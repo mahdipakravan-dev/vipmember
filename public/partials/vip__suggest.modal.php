@@ -37,11 +37,11 @@
 
 <script>
     // JavaScript/jQuery code for the modal
-    jQuery(document).ready(function($) {
-        if(true || !getStorage("__ls__options")) {
-            $('#vip-member-modal').show();
-            setStorate("__ls__options" , "SHIR")
-        } else {
-        }
-    });
+    // jQuery(document).ready(function($) {
+    //     if(true || !getStorage("__ls__options")) {
+    //         $('#vip-member-modal').show();
+    //         setStorate("__ls__options" , "SHIR")
+    //     } else {
+    //     }
+    // });
 </script>
