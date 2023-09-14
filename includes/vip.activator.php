@@ -1,6 +1,6 @@
 <?php
 
-require_once VIP_DIR . "inc/helpers/exchange-helper.php";
+require_once REFAC_THEME_DIRECTORY . "/inc/helpers/exchange-helper.php";
 class Activator {
 	public static function activate() {
         $table_name = VipDBHelper::get_table_name(VipDBHelper::VIP_PLANS_TABLE);
